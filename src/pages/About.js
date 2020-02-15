@@ -1,19 +1,9 @@
-import React, {Component} from 'react';
-import {View, Text, Image, Button} from 'react-native';
+import React from 'react';
+import {View, Text, Button} from 'react-native';
+
 import Style from '../../Style';
 
-class About extends Component {
-	static navigationOptions = {
-		tabBarIcon: () => {
-			return (
-				<Image
-					source={require('../components/icons/avatar.png')}
-					style={{width: 20, height: 20}}
-				/>
-			);
-		},
-	};
-
+export default class About extends React.Component {
 	search() {
 		this.props.navigation.navigate('Search');
 	}
@@ -22,7 +12,7 @@ class About extends Component {
 		return (
 			<View style={Style.view}>
 				<Text style={Style.title}>A propos de l'application</Text>
-				<Text>
+				<Text style={{marginBottom: 20}}>
 					Une application de découverte des applications mobiles, en services avec l'API
 					openWeather
 				</Text>
@@ -31,5 +21,3 @@ class About extends Component {
 		);
 	}
 }
-
-export default About;

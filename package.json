@@ -13,7 +13,6 @@
     "preset": "react-native"
   },
   "dependencies": {
-    "axios": "0.19.2",
     "kelvin-to-celsius": "1.1.0",
     "moment": "2.24.0",
     "native-base": "2.12.0",

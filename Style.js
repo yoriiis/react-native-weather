@@ -1,8 +1,13 @@
 import {StyleSheet} from 'react-native';
 
+let mainColor = '#133467';
+
 export default StyleSheet.create({
+	blue: {
+		color: '#133467',
+	},
 	button: {
-		backgroundColor: 'red',
+		backgroundColor: mainColor,
 		color: '#fff',
 		borderRadius: 10,
 		margin: 40,
@@ -20,13 +25,12 @@ export default StyleSheet.create({
 		height: 40,
 		borderColor: 'gray',
 		borderWidth: 1,
-		padding: 5,
+		padding: 10,
 		marginBottom: 20,
-		borderRadius: 10,
 		width: '100%',
 	},
 	header: {
-		backgroundColor: 'red',
+		backgroundColor: mainColor,
 	},
 	headerTitle: {
 		color: '#FFF',
@@ -36,14 +40,5 @@ export default StyleSheet.create({
 		backgroundColor: '#eee',
 		alignItems: 'center',
 		justifyContent: 'center',
-	},
-	h2: {
-		fontSize: 18,
-		textAlign: 'center',
-		margin: 20,
-	},
-	result: {
-		textAlign: 'center',
-		margin: 10,
 	},
 });
