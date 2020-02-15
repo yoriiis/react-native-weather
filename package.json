@@ -5,7 +5,10 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "keystore": "keytool -genkey -v -keystore react-native-weather.keystore -alias react-native-weather -keyalg RSA -keysize 2048 -validity 10000",
     "lint": "eslint .",
+    "pod-install": "cd ./ios && pod install && cd",
+    "release:android": "cd ./android && ./gradlew assembleRelease && cd ../",
     "start": "react-native start",
     "test": "jest"
   },
