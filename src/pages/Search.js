@@ -11,7 +11,8 @@ class Search extends React.Component {
 		super(props);
 
 		this.state = {
-			city: 'Nantes',
+			// city: null,
+			city: 'Chicago',
 		};
 	}
 
@@ -21,23 +22,27 @@ class Search extends React.Component {
 
 	submit() {
 		Keyboard.dismiss();
-		this.props.navigation.navigate('Result', {city: this.state.city});
+
+		if (this.state.city !== null) {
+			this.props.navigation.navigate('Result', {city: this.state.city});
+		}
 	}
 
 	render() {
 		return (
 			<View style={Style.view}>
-				<Text style={Style.title}>Rechercher votre ville</Text>
+				<Text style={Style.title}>Search a city</Text>
 				<TextInput
 					underlineColorAndroid="transparent"
 					onSubmitEditing={() => this.submit()}
 					onChangeText={text => this.setCity(text)}
 					style={Style.inputSearch}
+					placeholder="e.g. Chicago"
 					value={this.state.city}
 				/>
 				<Button
 					onPress={() => this.submit()}
-					title="Rechercher"
+					title="Search"
 					color={Style.blue.color}
 					style={Style.button}
 				/>

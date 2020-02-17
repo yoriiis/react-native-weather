@@ -8,7 +8,7 @@ import 'moment/locale/fr';
 
 import globalstyle from '../../Style';
 
-moment.locale('fr');
+moment.locale('en');
 
 export default class WeatherRow extends React.Component {
 	constructor(props) {
@@ -52,39 +52,36 @@ export default class WeatherRow extends React.Component {
 
 	render() {
 		return (
-			<Card>
-				<CardItem style={styles.listCard}>
-					<View style={styles.listView}>
-						<View style={styles.iconDate}>
-							{this.icon()}
+			<View style={styles.listView}>
+				<View style={styles.iconDate}>
+					{this.icon()}
 
-							<Text style={styles.date}>
-								{this.day()}
-								{this.date()}
-							</Text>
-						</View>
-						<View>
-							<Text style={styles.temperature}>
-								{Math.round(kelvinToCelsius(this.props.day.main.temp))}°C
-							</Text>
-						</View>
-					</View>
-				</CardItem>
-			</Card>
+					<Text style={styles.date}>
+						{this.day()} - {this.date()}
+					</Text>
+				</View>
+				<View>
+					<Text style={styles.temperature}>
+						{Math.round(kelvinToCelsius(this.props.day.main.temp))}°C
+					</Text>
+				</View>
+			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	listCard: {
-		backgroundColor: globalstyle.blue.color,
-		borderWidth: 0,
-	},
 	listView: {
+		backgroundColor: globalstyle.blue.color,
 		flex: 1,
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
+		paddingHorizontal: 20,
+		paddingVertical: 20,
+		borderBottomColor: '#0d274f',
+		borderWidth: 1,
+		borderTopWidth: 0,
 	},
 	iconDate: {
 		flex: 1,
@@ -93,6 +90,7 @@ const styles = StyleSheet.create({
 	},
 	temperature: {
 		color: '#fff',
+		fontSize: 25,
 	},
 	date: {
 		color: '#fff',
