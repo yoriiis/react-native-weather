@@ -23,6 +23,8 @@ export default class ActionButton extends React.Component {
 					color="#22529c"
 				/>
 			);
+		} else {
+			return null;
 		}
 	}
 }

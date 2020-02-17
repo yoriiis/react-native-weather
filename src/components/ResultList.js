@@ -5,7 +5,7 @@ import {ActivityIndicator, Colors} from 'react-native-paper';
 import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import WeatherRow from './Row';
+import ResultRow from './ResultRow';
 import ActionButton from './ActionButton';
 import Style from '../../Style';
 
@@ -33,48 +33,35 @@ export default class List extends React.Component {
 
 	init = async () => {
 		// this.clearStorage();
-		const currentStorage = await this.getData();
-		console.log('currentStorage', currentStorage);
+		const currentStorage = (await this.getData()) || [];
 
 		this.setState({
 			isSaved: currentStorage.includes(this.state.city),
+			storageCities: currentStorage,
 		});
 	};
 
 	clearStorage = async () => {
 		try {
 			await AsyncStorage.removeItem('cities');
-			console.log('Storage clear.');
 		} catch (e) {
 			console.log(e);
 		}
 	};
 
 	saveCity = async () => {
-		console.log('-----------------');
 		try {
-			let currentDatas = (await this.getData()) || [];
-			let newDatas = [this.state.city];
-			let mergeDatas = [];
-
-			if (Array.isArray(currentDatas) && !currentDatas.includes(this.state.city)) {
-				console.log('merged');
-				mergeDatas = newDatas.concat(currentDatas);
-				// newDatas = currentDatas;
+			if (!this.state.isSaved) {
+				const newDatas = [this.state.city].concat(this.state.storageCities);
+				await AsyncStorage.setItem('cities', JSON.stringify(newDatas), () => {
+					this.setState({
+						storageCities: newDatas,
+					});
+					this.setState({
+						isSaved: true,
+					});
+				});
 			}
-			console.log('currentDatas', currentDatas);
-			console.log('newDatas', newDatas);
-			console.log('mergeDatas', mergeDatas);
-
-			await AsyncStorage.setItem('cities', JSON.stringify(mergeDatas), () => {
-				this.setState({
-					storageCities: mergeDatas,
-				});
-				this.setState({
-					isSaved: true,
-				});
-				console.log('save ok');
-			});
 		} catch (e) {
 			console.log(e);
 		}
@@ -95,7 +82,6 @@ export default class List extends React.Component {
 			this.setState({
 				isSaved: false,
 			});
-			console.log('city removed', cities);
 		});
 	};
 	getData = async () => {
@@ -171,7 +157,7 @@ export default class List extends React.Component {
 					<FlatList
 						data={this.state.listFiltered}
 						keyExtractor={(item, index) => index.toString()}
-						renderItem={({item, index}) => <WeatherRow day={item} index={index} />}
+						renderItem={({item, index}) => <ResultRow day={item} index={index} />}
 					/>
 				</View>
 			);
