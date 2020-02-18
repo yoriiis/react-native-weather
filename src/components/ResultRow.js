@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
-import {Card, CardItem} from 'native-base';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import kelvinToCelsius from 'kelvin-to-celsius';

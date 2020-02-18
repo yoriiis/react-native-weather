@@ -1,7 +1,7 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, Text} from 'react-native';
 import {View} from 'native-base';
-import {ActivityIndicator, Colors} from 'react-native-paper';
+import {ActivityIndicator} from 'react-native-paper';
 import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -20,26 +20,29 @@ export default class List extends React.Component {
 
 	constructor(props) {
 		super(props);
+
+		const city = this.props.navigation.state.params.city;
+		const storage = this.props.navigation.state.params.storage;
+		let isSaved = false;
+
+		if (storage.includes(city)) {
+			isSaved = true;
+		}
+
 		this.state = {
-			city: this.props.navigation.state.params.city,
+			city: city,
 			datas: null,
 			error: false,
 			isLoading: true,
-			storageCities: [],
-			isSaved: null,
+			isSaved: isSaved,
+			storage: storage,
 		};
-		this.init();
+		// this.init();
 	}
 
-	init = async () => {
-		// this.clearStorage();
-		const currentStorage = (await this.getData()) || [];
-
-		this.setState({
-			isSaved: currentStorage.includes(this.state.city),
-			storageCities: currentStorage,
-		});
-	};
+	init() {
+		this.clearStorage();
+	}
 
 	clearStorage = async () => {
 		try {
@@ -52,14 +55,13 @@ export default class List extends React.Component {
 	saveCity = async () => {
 		try {
 			if (!this.state.isSaved) {
-				const newDatas = [this.state.city].concat(this.state.storageCities);
+				const newDatas = [this.state.city].concat(this.state.storage);
 				await AsyncStorage.setItem('cities', JSON.stringify(newDatas), () => {
 					this.setState({
-						storageCities: newDatas,
-					});
-					this.setState({
+						storage: newDatas,
 						isSaved: true,
 					});
+					this.props.navigation.state.params.updateStorage(newDatas);
 				});
 			}
 		} catch (e) {
@@ -68,34 +70,20 @@ export default class List extends React.Component {
 	};
 
 	removeCity = async () => {
-		const cities = this.state.storageCities;
-		const indexCity = cities.findIndex(city => city === this.state.city);
+		const newDatas = this.state.storage;
+		const indexCity = newDatas.findIndex(city => city === this.state.city);
 
 		if (indexCity !== -1) {
-			cities.splice(indexCity, 1);
+			newDatas.splice(indexCity, 1);
 		}
 
-		await AsyncStorage.setItem('cities', JSON.stringify(cities), () => {
+		await AsyncStorage.setItem('cities', JSON.stringify(newDatas), () => {
 			this.setState({
-				storageCities: cities,
-			});
-			this.setState({
+				storage: newDatas,
 				isSaved: false,
 			});
+			this.props.navigation.state.params.updateStorage(newDatas);
 		});
-	};
-	getData = async () => {
-		try {
-			let datas = await AsyncStorage.getItem('cities');
-
-			if (datas !== null) {
-				datas = JSON.parse(datas);
-			}
-
-			return datas;
-		} catch (e) {
-			console.log(e);
-		}
 	};
 
 	componentDidMount() {
@@ -110,7 +98,6 @@ export default class List extends React.Component {
 			})
 			.catch(() => {
 				this.setState({error: true});
-				this.props.navigation.navigate('Search');
 			});
 	}
 
@@ -140,19 +127,28 @@ export default class List extends React.Component {
 		if (this.state.isLoading) {
 			return (
 				<ActivityIndicator
-					style={Style.Indicator}
+					style={{flex: 1}}
 					animating={true}
-					color={Colors.white800}
+					color={Style.blue.color}
 					size="large"
 				/>
+			);
+		} else if (this.state.error) {
+			return (
+				<View style={{flex: 1, justifyContent: 'center'}}>
+					<Text style={{textAlign: 'center'}}>An error occured</Text>
+				</View>
 			);
 		} else {
 			return (
 				<View>
 					<ActionButton
 						isSaved={this.state.isSaved}
-						methodSave={this.saveCity.bind(this)}
-						methodRemove={this.removeCity.bind(this)}
+						update={
+							this.state.isSaved
+								? this.removeCity.bind(this)
+								: this.saveCity.bind(this)
+						}
 					/>
 					<FlatList
 						data={this.state.listFiltered}

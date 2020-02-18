@@ -29,6 +29,9 @@ export default StyleSheet.create({
 		marginBottom: 20,
 		width: '100%',
 	},
+	inputError: {
+		borderColor: 'red',
+	},
 	header: {
 		backgroundColor: mainColor,
 	},
