@@ -5,6 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "build:android": "cd ./android && ./gradlew build && cd ../",
+    "firebase:distribute:android": "firebase appdistribution:distribute ./android/app/build/outputs/apk/release/app-release.apk --app 1:160605766361:android:63147144f3ae1d996bb4c8",
     "ios": "react-native run-ios",
     "keystore": "keytool -genkey -v -keystore react-native-weather.keystore -alias react-native-weather -keyalg RSA -keysize 2048 -validity 10000",
     "lint": "eslint .",
