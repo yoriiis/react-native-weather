@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
 
-import Style from '../../Style';
+import Style from '../Style';
 
 export default class About extends React.Component {
 	search() {
@@ -16,7 +16,12 @@ export default class About extends React.Component {
 					Une application de découverte des applications mobiles, en services avec l'API
 					openWeather
 				</Text>
-				<Button onPress={() => this.search()} title="Rechercher" style={Style.button} />
+				<Button
+					onPress={() => this.search()}
+					title="Rechercher"
+					color={Style.blue.color}
+					style={Style.button}
+				/>
 			</View>
 		);
 	}

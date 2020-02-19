@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, FlatList, StyleSheet, View, Button} from 'react-native';
 
-import GlobalStyle from '../../Style';
+import GlobalStyle from '../Style';
 
 export default class ListSaved extends React.Component {
 	render() {
@@ -19,7 +19,7 @@ export default class ListSaved extends React.Component {
 									color={GlobalStyle.blue.color}
 									onPress={() =>
 										this.props.navigation.navigate('ResultList', {
-											city: item,
+											city: item.toLowerCase(),
 											storage: this.props.storage,
 											updateStorage: this.props.updateStorage,
 										})

@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, Button, View, Text, Keyboard} from 'react-native';
+import {StyleSheet, TextInput, Button, View, Text, Keyboard} from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -7,7 +7,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import ResultList from '../components/ResultList';
 import ListSaved from '../components/ListSaved';
-import Style from '../../Style';
+
+import GlobalStyle from '../Style';
 
 class Search extends React.Component {
 	constructor(props) {
@@ -81,27 +82,27 @@ class Search extends React.Component {
 				<ActivityIndicator
 					style={{flex: 1}}
 					animating={true}
-					color={Style.blue.color}
+					color={GlobalStyle.blue.color}
 					size="large"
 				/>
 			);
 		} else {
 			return (
-				<View style={Style.view}>
-					<Text style={Style.title}>Search a city</Text>
+				<View style={GlobalStyle.view}>
+					<Text style={GlobalStyle.title}>Search a city</Text>
 					<TextInput
 						underlineColorAndroid="transparent"
 						onSubmitEditing={() => this.submit()}
 						onChangeText={text => this.setCity(text)}
-						style={[Style.inputSearch, this.state.inputError ? Style.inputError : '']}
+						style={[styles.inputSearch, this.state.inputError ? styles.inputError : '']}
 						placeholder="e.g. Chicago"
 						value={this.state.city}
 					/>
 					<Button
 						onPress={() => this.submit()}
 						title="Search"
-						color={Style.blue.color}
-						style={Style.button}
+						color={GlobalStyle.blue.color}
+						style={GlobalStyle.button}
 					/>
 					<ListSaved
 						cities={this.state.storage}
@@ -115,9 +116,23 @@ class Search extends React.Component {
 	}
 }
 
+const styles = StyleSheet.create({
+	inputSearch: {
+		height: 40,
+		borderColor: 'gray',
+		borderWidth: 1,
+		padding: 10,
+		marginBottom: 20,
+		width: '100%',
+	},
+	inputError: {
+		borderColor: 'red',
+	},
+});
+
 const navigationOptions = {
-	headerStyle: Style.header,
-	headerTitleStyle: Style.headerTitle,
+	headerStyle: GlobalStyle.header,
+	headerTitleStyle: GlobalStyle.headerTitle,
 	headerTintColor: '#fff',
 };
 

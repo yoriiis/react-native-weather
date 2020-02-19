@@ -15,33 +15,17 @@ export default StyleSheet.create({
 	},
 	view: {
 		margin: 20,
+		flex: 1,
 	},
 	title: {
 		fontSize: 22,
 		marginBottom: 20,
 		textAlign: 'center',
 	},
-	inputSearch: {
-		height: 40,
-		borderColor: 'gray',
-		borderWidth: 1,
-		padding: 10,
-		marginBottom: 20,
-		width: '100%',
-	},
-	inputError: {
-		borderColor: 'red',
-	},
 	header: {
 		backgroundColor: mainColor,
 	},
 	headerTitle: {
 		color: '#FFF',
-	},
-	container: {
-		flex: 1,
-		backgroundColor: '#eee',
-		alignItems: 'center',
-		justifyContent: 'center',
 	},
 });

@@ -1,11 +1,19 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import kelvinToCelsius from 'kelvin-to-celsius';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {
+	faSun,
+	faCloud,
+	faCloudShowersHeavy,
+	faSnowflake,
+	faBolt,
+} from '@fortawesome/free-solid-svg-icons';
 import 'moment/locale/fr';
 
-import globalstyle from '../../Style';
+import GlobalStyle from '../Style';
 
 moment.locale('en');
 
@@ -21,20 +29,29 @@ export default class WeatherRow extends React.Component {
 
 	icon(size = 50) {
 		const type = this.props.day.weather[0].main.toLowerCase();
-		let image;
+		let icon;
 
 		switch (type) {
 			case 'clouds':
-				image = require('./icons/cloud.png');
+				icon = faCloud;
 				break;
 			case 'rain':
-				image = require('./icons/rain.png');
+				icon = faCloudShowersHeavy;
+				break;
+			case 'snow':
+				icon = faSnowflake;
+				break;
+			case 'drizzle':
+				icon = faCloudShowersHeavy;
+				break;
+			case 'thunderstorm':
+				icon = faBolt;
 				break;
 			default:
-				image = require('./icons/clear.png');
+				icon = faSun;
 		}
 
-		return <Image source={image} style={{width: size, height: size}} />;
+		return <FontAwesomeIcon icon={icon} style={styles.iconWeather} size={35} />;
 	}
 
 	day() {
@@ -71,7 +88,7 @@ export default class WeatherRow extends React.Component {
 
 const styles = StyleSheet.create({
 	listView: {
-		backgroundColor: globalstyle.blue.color,
+		backgroundColor: GlobalStyle.blue.color,
 		flex: 1,
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -82,6 +99,9 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderTopWidth: 0,
 	},
+	iconWeather: {
+		color: '#fff',
+	},
 	iconDate: {
 		flex: 1,
 		flexDirection: 'row',
@@ -90,9 +110,12 @@ const styles = StyleSheet.create({
 	temperature: {
 		color: '#fff',
 		fontSize: 25,
+		fontWeight: 'bold',
 	},
 	date: {
 		color: '#fff',
 		marginLeft: 10,
+		fontSize: 15,
+		opacity: 0.8,
 	},
 });

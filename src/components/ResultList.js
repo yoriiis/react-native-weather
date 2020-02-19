@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import ResultRow from './ResultRow';
 import ActionButton from './ActionButton';
-import Style from '../../Style';
+import Style from '../Style';
 
 moment.locale('us');
 
