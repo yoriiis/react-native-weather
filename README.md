@@ -4,6 +4,9 @@ This project was bootstrapped with [React Native CLI](https://facebook.github.io
 
 Sample weather app inspired from [Grafikart video](https://www.youtube.com/watch?v=Y7rbJRjaYCY).
 
+| ![List result](./screenshots/home.png) | ![List result](./screenshots/list-result.png) | ![List result](./screenshots/home-saved.png) |
+|-------------------------------------------------------|-------------------------------------------------------|-------------------------------------------------------|
+
 ## Available Scripts
 
 In the project directory, you can run:
